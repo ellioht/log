@@ -146,6 +146,21 @@ func CallerFuncHandler(h Handler) Handler {
 	})
 }
 
+// CallerStackHandler returns a Handler that adds a stack trace to the context
+// with key "stack". The stack trace is formated as a space separated list of
+// call sites inside matching []'s. The most recent call site is listed first.
+// Each call site is formatted according to format. See the documentation of
+// package github.com/go-stack/stack for the list of supported formats.
+func CallerStackHandler(format string, h Handler) Handler {
+	return FuncHandler(func(r *Record) error {
+		s := stack.Trace().TrimBelow(r.Call).TrimRuntime()
+		if len(s) > 0 {
+			r.Ctx = append(r.Ctx, "stack", fmt.Sprintf(format, s))
+		}
+		return h.Log(r)
+	})
+}
+
 // FilterHandler returns a Handler that only writes records to the
 // wrapped Handler if the given function evaluates true. For example,
 // to only log records where the 'err' key is not nil:
