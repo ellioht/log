@@ -167,6 +167,11 @@ func (l *logger) Crit(msg string, ctx ...interface{}) {
 	l.write(msg, LvlCrit, ctx)
 }
 
+// Log method to route configurable log level
+func (l *logger) Log(l Lvl, msg string, ctx ...interface{}) {
+	l.write(msg, l, ctx)
+}
+
 func (l *logger) GetHandler() Handler {
 	return l.h.Get()
 }

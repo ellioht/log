@@ -74,22 +74,7 @@ func Crit(msg string, ctx ...interface{}) {
 
 // Log method to route configurable log level
 func Log(l Lvl, msg string, ctx ...interface{}) {
-	switch l {
-	case LvlTrace:
-		Trace(msg, ctx...)
-	case LvlDebug:
-		Debug(msg, ctx...)
-	case LvlInfo:
-		Info(msg, ctx...)
-	case LvlWarn:
-		Warn(msg, ctx...)
-	case LvlError:
-		Error(msg, ctx...)
-	case LvlCrit:
-		Crit(msg, ctx...)
-	default:
-		panic("bad level")
-	}
+	root.write(msg, l, ctx)
 }
 
 // SetRootHandler recreates root logger and set h as multihandler along with existed root handler
