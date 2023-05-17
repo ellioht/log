@@ -107,6 +107,7 @@ type Logger interface {
 	Warn(msg string, ctx ...interface{})
 	Error(msg string, ctx ...interface{})
 	Crit(msg string, ctx ...interface{})
+	Log(level Lvl, msg string, ctx ...interface{})
 }
 
 type logger struct {
