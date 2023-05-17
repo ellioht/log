@@ -73,8 +73,8 @@ func Crit(msg string, ctx ...interface{}) {
 }
 
 // Log method to route configurable log level
-func Log(l Lvl, msg string, ctx ...interface{}) {
-	root.write(msg, l, ctx)
+func Log(level Lvl, msg string, ctx ...interface{}) {
+	root.write(msg, level, ctx)
 }
 
 // SetRootHandler recreates root logger and set h as multihandler along with existed root handler
