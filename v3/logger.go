@@ -107,6 +107,7 @@ type Logger interface {
 	Warn(msg string, ctx ...interface{})
 	Error(msg string, ctx ...interface{})
 	Crit(msg string, ctx ...interface{})
+	Log(level Lvl, msg string, ctx ...interface{})
 }
 
 type logger struct {
@@ -165,6 +166,11 @@ func (l *logger) Error(msg string, ctx ...interface{}) {
 
 func (l *logger) Crit(msg string, ctx ...interface{}) {
 	l.write(msg, LvlCrit, ctx)
+}
+
+// Log method to route configurable log level
+func (l *logger) Log(level Lvl, msg string, ctx ...interface{}) {
+	l.write(msg, level, ctx)
 }
 
 func (l *logger) GetHandler() Handler {
