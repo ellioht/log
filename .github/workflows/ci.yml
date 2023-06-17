@@ -16,7 +16,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - run: git submodule update --init --recursive --force
-      - uses: actions/setup-go@v
+      - uses: actions/setup-go@v4
         with:
           go-version: 1.17.x
       - name: Install dependencies
@@ -25,7 +25,7 @@ jobs:
             sudo apt update && sudo apt install build-essential
           fi
         shell: bash
-      - uses: actions/cache@v2
+      - uses: actions/cache@v3
         with:
           path: ~/go/pkg/mod
           key: ${{ matrix.os }}-go-${{ hashFiles('**/go.sum') }}
@@ -33,7 +33,7 @@ jobs:
         if: matrix.os == 'ubuntu-20.04'
         uses: golangci/golangci-lint-action@v3
         with:
-          version: v1.44
+          version: v1.53
           skip-pkg-cache: true
           skip-build-cache: true
       - run: go test ./...
