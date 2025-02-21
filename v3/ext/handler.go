@@ -6,7 +6,7 @@ import (
 	"sync/atomic"
 	"unsafe"
 
-	"github.com/ledgerwatch/log/v3"
+	"github.com/ellioht/log/v3"
 )
 
 // EscalateErrHandler wraps another handler and passes all records through
@@ -19,15 +19,14 @@ import (
 // log line. As an example, the following the log record will be written
 // out only if there was an error writing a value to redis:
 //
-//     logger := logext.EscalateErrHandler(
-//         log.LvlFilterHandler(log.LvlInfo, log.StdoutHandler))
+//	logger := logext.EscalateErrHandler(
+//	    log.LvlFilterHandler(log.LvlInfo, log.StdoutHandler))
 //
-//     reply, err := redisConn.Do("SET", "foo", "bar")
-//     logger.Debug("Wrote value to redis", "reply", reply, "err", err)
-//     if err != nil {
-//         return err
-//     }
-//
+//	reply, err := redisConn.Do("SET", "foo", "bar")
+//	logger.Debug("Wrote value to redis", "reply", reply, "err", err)
+//	if err != nil {
+//	    return err
+//	}
 func EscalateErrHandler(h log.Handler) log.Handler {
 	return log.FuncHandler(func(r *log.Record) error {
 		if r.Lvl > log.LvlError {
